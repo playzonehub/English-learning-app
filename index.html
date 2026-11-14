@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6558e8">
+<title>Speak English | 30 Day Course</title>
+
+<style>
+:root{
+ --primary:#6558e8;
+ --primary2:#887cff;
+ --bg:#f5f6fc;
+ --text:#20213a;
+ --muted:#777b91;
+ --white:#fff;
+ --green:#16a879;
+ --shadow:0 8px 28px rgba(35,35,80,.07);
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Inter,Arial,sans-serif;
+}
+button{font-family:inherit;cursor:pointer}
+.app{max-width:1100px;margin:auto;min-height:100vh;padding-bottom:85px}
+.topbar{
+ background:linear-gradient(130deg,#5145d9,#8879ff);
+ color:white;padding:22px 20px 28px;
+ border-radius:0 0 28px 28px;
+}
+.toprow{display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:19px;font-weight:800}
+.avatar{
+ width:42px;height:42px;border-radius:14px;
+ background:#ffffff30;display:grid;place-items:center;font-size:22px;
+}
+.greeting{margin-top:25px}
+.greeting h1{font-size:25px;margin:5px 0}
+.greeting p{margin:0;opacity:.85;font-size:14px}
+.container{padding:17px}
+.stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:10px;margin-top:-2px;
+}
+.stat{
+ background:white;border-radius:17px;padding:15px 10px;
+ box-shadow:var(--shadow);text-align:center;
+}
+.stat strong{display:block;font-size:22px;color:var(--primary)}
+.stat small{color:var(--muted);font-size:11px}
+.card{
+ background:white;border-radius:19px;padding:18px;
+ box-shadow:var(--shadow);margin:15px 0;
+}
+.card h2{font-size:18px;margin:0 0 12px}
+.card h3{font-size:16px}
+.muted{color:var(--muted);font-size:13px;line-height:1.6}
+.progress-bg{height:9px;background:#eeedf8;border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#6558e8,#a69cff);transition:.3s}
+.section-title{display:flex;justify-content:space-between;align-items:center}
+.section-title span{font-size:12px;color:var(--primary)}
+.smart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.smart{
+ padding:17px;border-radius:17px;background:#f3f1ff;
+ cursor:pointer;min-height:110px;
+}
+.smart:nth-child(2){background:#eaf9f3}
+.smart:nth-child(3){background:#fff4e8}
+.smart:nth-child(4){background:#edf5ff}
+.smart .emoji{font-size:25px}
+.smart b{display:block;margin-top:9px;font-size:14px}
+.smart small{color:var(--muted);font-size:11px}
+.days{
+ display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
+}
+.day{
+ border:0;border-radius:12px;padding:12px 2px;
+ background:#f0efff;color:#5145d9;font-weight:700;font-size:12px;
+}
+.day.active{background:var(--primary);color:white}
+.day.done{background:#dcf7eb;color:#13855e}
+.btn{
+ border:0;border-radius:12px;background:var(--primary);
+ color:white;padding:12px 16px;font-size:14px;font-weight:700;
+}
+.btn.light{background:#efedff;color:var(--primary)}
+.btn.green{background:#e3f8ef;color:#11845b}
+.btn.dark{background:#24243c}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.full{width:100%}
+.lesson-head{
+ background:linear-gradient(135deg,#5145d9,#8b7dff);
+ color:white;border-radius:20px;padding:22px;
+}
+.lesson-head small{opacity:.8}
+.lesson-head h2{font-size:23px;margin:8px 0}
+.lesson-head p{font-size:13px;opacity:.9}
+.lesson-meta{display:flex;gap:8px;flex-wrap:wrap}
+.pill{background:#ffffff25;padding:6px 10px;border-radius:20px;font-size:11px}
+.example{
+ padding:14px;margin:11px 0;border-radius:13px;
+ background:#f7f7fc;border:1px solid #efeff7;
+}
+.english{font-size:16px;font-weight:700;line-height:1.5}
+.bengali{font-size:13px;color:#73768b;margin-top:5px}
+.play{
+ border:0;border-radius:30px;background:#eae8ff;color:#594bd9;
+ padding:8px 12px;font-size:12px;font-weight:700;margin-top:10px;
+}
+.play.playing{background:#6558e8;color:white}
+.practice-box{
+ background:#f1efff;border-radius:15px;padding:16px;
+}
+.practice-box textarea{
+ width:100%;min-height:75px;border:1px solid #ddd;
+ border-radius:11px;padding:12px;font:14px Arial;resize:vertical;
+}
+input,select{
+ padding:12px;border:1px solid #e3e3ed;border-radius:10px;
+ width:100%;font:14px Arial;background:white;
+}
+.quiz-option{
+ display:block;width:100%;text-align:left;padding:13px;
+ margin:8px 0;border:1px solid #e6e5ef;border-radius:11px;
+ background:white;color:var(--text);
+}
+.quiz-option.correct{background:#e2f8ed;border-color:#16a879}
+.quiz-option.wrong{background:#fff0f0;border-color:#e66}
+.tabpage{display:none}
+.tabpage.active{display:block}
+.bottomnav{
+ position:fixed;bottom:0;left:0;right:0;
+ background:white;box-shadow:0 -5px 25px #2222220d;
+ display:flex;justify-content:center;z-index:5;
+}
+.bottominner{
+ width:100%;max-width:1100px;display:grid;
+ grid-template-columns:repeat(4,1fr);
+}
+.navbtn{
+ border:0;background:white;padding:12px 3px 10px;
+ color:#85869a;font-size:11px;
+}
+.navbtn span{display:block;font-size:20px;margin-bottom:4px}
+.navbtn.active{color:var(--primary);font-weight:800}
+.empty{text-align:center;color:var(--muted);padding:20px}
+footer{text-align:center;padding:20px;color:#999;font-size:11px}
+@media(min-width:700px){
+ .container{padding:24px}
+ .smart-grid{grid-template-columns:repeat(4,1fr)}
+ .days{grid-template-columns:repeat(10,1fr)}
+ .lesson-layout{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header class="topbar">
+ <div class="toprow">
+  <div class="brand">🗣️ Speak English</div>
+  <div class="avatar">👨‍🎓</div>
+ </div>
+ <div class="greeting">
+  <p>YOUR PERSONAL ENGLISH COACH</p>
+  <h1>Learn English Every Day! 👋</h1>
+  <p>৩০ দিনে English speaking practice শুরু করুন।</p>
+ </div>
+</header>
+
+<main class="container">
+
+<!-- HOME -->
+<section class="tabpage active" id="home">
+ <div class="stats">
+  <div class="stat"><strong id="doneCount">0</strong><small>Completed</small></div>
+  <div class="stat"><strong>30</strong><small>Total Days</small></div>
+  <div class="stat"><strong id="percent">0%</strong><small>Progress</small></div>
+ </div>
+
+ <div class="card">
+  <div class="section-title">
+   <h2>🎯 Your Learning Journey</h2>
+   <span id="progressLabel">0 / 30</span>
+  </div>
+  <div class="progress-bg"><div class="progress-fill" id="progress"></div></div>
+  <p class="muted">প্রতিদিন একটি lesson complete করে English speaking improve করুন।</p>
+  <button class="btn full" onclick="openCurrent()">Continue Learning →</button>
+ </div>
+
+ <div class="card">
+  <h2>⚡ Smart Learning Zone</h2>
+  <div class="smart-grid">
+   <div class="smart" onclick="showTab('course')">
+    <div class="emoji">📚</div><b>30 Day Course</b><small>Daily lessons</small>
+   </div>
+   <div class="smart" onclick="showTab('sentences')">
+    <div class="emoji">💬</div><b>English Sentences</b><small>Listen and learn</small>
+   </div>
+   <div class="smart" onclick="showTab('practice')">
+    <div class="emoji">🎤</div><b>Speaking Practice</b><small>Speak English</small>
+   </div>
+   <div class="smart" onclick="showTab('quiz')">
+    <div class="emoji">🏆</div><b>Daily Quiz</b><small>Test yourself</small>
+   </div>
+  </div>
+ </div>
+
+ <div class="card">
+  <h2>📅 Today's Lesson</h2>
+  <h3 id="todayTitle">Day 1: Introduction</h3>
+  <p class="muted">Learn useful English sentences with Bengali meanings and audio pronunciation.</p>
+  <button class="btn" onclick="openCurrent()">Start Lesson</button>
+ </div>
+</section>
+
+<!-- COURSE -->
+<section class="tabpage" id="course">
+ <div class="card">
+  <h2>📚 30 Days English Course</h2>
+  <p class="muted">একদিনে একটি lesson complete করার চেষ্টা করুন। Completed lesson সবুজ রঙে দেখা যাবে।</p>
+  <div class="days" id="dayGrid"></div>
+ </div>
+ <div id="lessonArea"></div>
+</section>
+
+<!-- SENTENCES -->
+<section class="tabpage" id="sentences">
+ <div class="card">
+  <h2>💬 English Sentence Library</h2>
+  <p class="muted">English sentence শুনুন, বাংলা অর্থ পড়ুন এবং নিজে বলার চেষ্টা করুন।</p>
+  <input id="sentenceSearch" placeholder="Search English or Bengali..." oninput="renderSentences()">
+  <div id="sentenceList"></div>
+ </div>
+</section>
+
+<!-- PRACTICE -->
+<section class="tabpage" id="practice">
+ <div class="card">
+  <h2>🎤 Speaking Practice Room</h2>
+  <p class="muted">প্রথমে English sentence শুনুন। তারপর নিজে জোরে জোরে বলুন।</p>
+  <div class="practice-box">
+   <p class="muted">TODAY'S SPEAKING CHALLENGE</p>
+   <h3 id="challengeText">Introduce yourself in English.</h3>
+   <button class="btn" onclick="speak(document.getElementById('challengeText').innerText)">🔊 Listen</button>
+   <button class="btn light" onclick="newChallenge()">New Challenge</button>
+  </div>
+  <h3>✍️ Write your answer</h3>
+  <textarea id="practiceAnswer" placeholder="Write your English answer here..."></textarea>
+  <br><br>
+  <button class="btn full" onclick="savePractice()">Save My Practice</button>
+  <p class="muted" id="practiceMessage"></p>
+  <hr style="border:0;border-top:1px solid #eee;margin:20px 0">
+  <h3>🎧 Listen & Repeat</h3>
+  <p class="muted">শুনুন এবং একই বাক্য তিনবার বলুন।</p>
+  <button class="btn green full" onclick="repeatSentence()">▶ Listen & Repeat</button>
+ </div>
+</section>
+
+<!-- QUIZ -->
+<section class="tabpage" id="quiz">
+ <div class="card">
+  <h2>🏆 English Quick Quiz</h2>
+  <p class="muted">সঠিক উত্তর বেছে নিন।</p>
+  <div id="quizArea"></div>
+  <button class="btn full" onclick="nextQuiz()">Next Question →</button>
+  <p id="quizFeedback" class="muted"></p>
+  <p id="quizScore"></p>
+ </div>
+</section>
+
+</main>
+<footer>Speak English Confidently in 30 Days • Learn • Listen • Practice</footer>
+
+<nav class="bottomnav">
+ <div class="bottominner">
+  <button class="navbtn active" data-tab="home" onclick="showTab('home')"><span>🏠</span>Home</button>
+  <button class="navbtn" data-tab="course" onclick="showTab('course')"><span>📚</span>Course</button>
+  <button class="navbtn" data-tab="sentences" onclick="showTab('sentences')"><span>💬</span>Sentences</button>
+  <button class="navbtn" data-tab="practice" onclick="showTab('practice')"><span>🎤</span>Practice</button>
+ </div>
+</nav>
+</div>
+
+<script>
+// ---------------- LESSON DATA ----------------
+const lessons = [
+["Introduction","নিজের পরিচয় দেওয়া শিখুন",[
+["My name is Rahul.","আমার নাম রাহুল।"],
+["I am from Kolkata.","আমি কলকাতা থেকে এসেছি।"],
+["I am a student.","আমি একজন ছাত্র।"],
+["I am 25 years old.","আমার বয়স ২৫ বছর।"],
+["Nice to meet you.","আপনার সঙ্গে দেখা হয়ে ভালো লাগল।"]
+],"Introduce yourself in English."],
+
+["Daily Greetings","প্রতিদিনের Greetings",[
+["Good morning.","সুপ্রভাত।"],
+["How are you?","আপনি কেমন আছেন?"],
+["I am fine.","আমি ভালো আছি।"],
+["Thank you very much.","আপনাকে অনেক ধন্যবাদ।"],
+["See you later.","পরে দেখা হবে।"]
+],"Practice greetings in front of a mirror."],
+
+["Basic English Words","সহজ English শব্দ ও বাক্য",[
+["Come here.","এখানে আসুন।"],
+["Please sit down.","দয়া করে বসুন।"],
+["Listen to me.","আমার কথা শুনুন।"],
+["Wait a moment.","একটু অপেক্ষা করুন।"],
+["Let's go.","চলুন যাই।"]
+],"Speak these five sentences aloud."],
+
+["Am, Is, Are","Am, Is, Are-এর ব্যবহার",[
+["I am happy.","আমি খুশি।"],
+["He is busy.","সে ব্যস্ত।"],
+["She is beautiful.","সে সুন্দর।"],
+["We are ready.","আমরা প্রস্তুত।"],
+["They are friends.","তারা বন্ধু।"]
+],"Make five sentences using am, is and are."],
+
+["Daily Routine","দৈনন্দিন কাজের বর্ণনা",[
+["I wake up early.","আমি সকালে তাড়াতাড়ি উঠি।"],
+["I brush my teeth.","আমি দাঁত মাজি।"],
+["I take a bath.","আমি স্নান করি।"],
+["I eat breakfast.","আমি সকালের খাবার খাই।"],
+["I go to work.","আমি কাজে যাই।"]
+],"Describe your daily routine."],
+
+["Simple Present Tense","Simple Present Tense",[
+["I play cricket.","আমি ক্রিকেট খেলি।"],
+["She cooks food.","সে রান্না করে।"],
+["He works hard.","সে কঠোর পরিশ্রম করে।"],
+["I drink water.","আমি জল খাই।"],
+["We study English.","আমরা ইংরেজি শিখি।"]
+],"Describe five things you do every day."],
+
+["Negative Sentences","না-বাচক বাক্য",[
+["I do not know.","আমি জানি না।"],
+["I don't like tea.","আমি চা পছন্দ করি না।"],
+["He is not ready.","সে প্রস্তুত নয়।"],
+["I cannot swim.","আমি সাঁতার কাটতে পারি না।"],
+["She does not work here.","সে এখানে কাজ করে না।"]
+],"Create five negative sentences."],
+
+["Asking Questions","প্রশ্ন করা শিখুন",[
+["What is your name?","আপনার নাম কী?"],
+["Where do you live?","আপনি কোথায় থাকেন?"],
+["What do you do?","আপনি কী করেন?"],
+["Are you busy?","আপনি কি ব্যস্ত?"],
+["Can you help me?","আপনি কি আমাকে সাহায্য করতে পারেন?"]
+],"Ask five questions in English."],
+
+["Present Continuous","এখন কী হচ্ছে",[
+["I am eating.","আমি খাচ্ছি।"],
+["She is cooking.","সে রান্না করছে।"],
+["He is sleeping.","সে ঘুমাচ্ছে।"],
+["They are playing.","তারা খেলছে।"],
+["I am learning English.","আমি ইংরেজি শিখছি।"]
+],"Describe what people are doing now."],
+
+["Past Tense","অতীতের ঘটনা",[
+["I went to school.","আমি স্কুলে গিয়েছিলাম।"],
+["I ate rice.","আমি ভাত খেয়েছিলাম।"],
+["She called me.","সে আমাকে ফোন করেছিল।"],
+["He came yesterday.","সে গতকাল এসেছিল।"],
+["I watched a movie.","আমি একটি সিনেমা দেখেছিলাম।"]
+],"Talk about what you did yesterday."],
+
+["Future Tense","ভবিষ্যতের পরিকল্পনা",[
+["I will call you.","আমি আপনাকে ফোন করব।"],
+["I will go tomorrow.","আমি কাল যাব।"],
+["She will come soon.","সে শীঘ্রই আসবে।"],
+["I will help you.","আমি আপনাকে সাহায্য করব।"],
+["We will meet again.","আমরা আবার দেখা করব।"]
+],"Talk about your plans for tomorrow."],
+
+["Can, Could, May","সামর্থ্য ও অনুমতি",[
+["I can speak English.","আমি ইংরেজি বলতে পারি।"],
+["Could you help me?","আপনি কি আমাকে সাহায্য করবেন?"],
+["May I come in?","আমি কি ভিতরে আসতে পারি?"],
+["Can I sit here?","আমি কি এখানে বসতে পারি?"],
+["I could swim.","আমি সাঁতার কাটতে পারতাম।"]
+],"Make five sentences using can and could."],
+
+["There Is / There Are","কোনো কিছু আছে বোঝানো",[
+["There is a book.","একটি বই আছে।"],
+["There are two chairs.","দুটি চেয়ার আছে।"],
+["There is a shop nearby.","কাছেই একটি দোকান আছে।"],
+["There are many people.","অনেক মানুষ আছে।"],
+["Is there a bank nearby?","কাছাকাছি কি ব্যাংক আছে?"]
+],"Describe your room."],
+
+["Prepositions","In, On, At-এর ব্যবহার",[
+["The book is on the table.","বইটি টেবিলের উপর।"],
+["I live in Kolkata.","আমি কলকাতায় থাকি।"],
+["I wake up at 7 AM.","আমি সকাল ৭টায় উঠি।"],
+["The keys are in my bag.","চাবিগুলো আমার ব্যাগে আছে।"],
+["He is at home.","সে বাড়িতে আছে।"]
+],"Describe where five objects are."],
+
+["Describing People","মানুষ ও জিনিসের বর্ণনা",[
+["He is very friendly.","সে খুব বন্ধুত্বপূর্ণ।"],
+["She is intelligent.","সে বুদ্ধিমান।"],
+["This is a beautiful house.","এটি একটি সুন্দর বাড়ি।"],
+["My father is hardworking.","আমার বাবা পরিশ্রমী।"],
+["The weather is pleasant.","আবহাওয়া মনোরম।"]
+],"Describe a person you know."],
+
+["Shopping English","দোকানে English কথোপকথন",[
+["How much is this?","এটার দাম কত?"],
+["Please show me this.","এটা দেখান।"],
+["Do you have another colour?","অন্য রং আছে?"],
+["It is too expensive.","এটি খুব দামি।"],
+["I will buy this.","আমি এটি কিনব।"]
+],"Act out a shopping conversation."],
+
+["Market Conversation","বাজারে কথাবার্তা",[
+["I need one kilo of potatoes.","আমার এক কেজি আলু দরকার।"],
+["Give me fresh vegetables.","আমাকে টাটকা সবজি দিন।"],
+["Please reduce the price.","দয়া করে দাম কমান।"],
+["Anything else?","আর কিছু?"],
+["That's all.","এই পর্যন্তই।"]
+],"Practice a market conversation."],
+
+["Restaurant English","রেস্টুরেন্টে English",[
+["Can I see the menu?","আমি কি মেনু দেখতে পারি?"],
+["I would like chicken biryani.","আমি চিকেন বিরিয়ানি চাই।"],
+["Please bring some water.","দয়া করে একটু জল আনুন।"],
+["The food is delicious.","খাবারটি সুস্বাদু।"],
+["Can I have the bill?","বিলটা কি দিতে পারেন?"]
+],"Order food in English."],
+
+["Asking Directions","রাস্তার ঠিকানা জিজ্ঞাসা",[
+["Where is the railway station?","রেলস্টেশন কোথায়?"],
+["Go straight.","সোজা যান।"],
+["Turn left.","বাঁ দিকে ঘুরুন।"],
+["Turn right.","ডান দিকে ঘুরুন।"],
+["Is it far from here?","এখান থেকে কি দূরে?"]
+],"Explain how to reach a nearby place."],
+
+["Transport English","যাতায়াতের English",[
+["I need a taxi.","আমার একটি ট্যাক্সি দরকার।"],
+["Where is the bus stop?","বাসস্ট্যান্ড কোথায়?"],
+["How much is the fare?","ভাড়া কত?"],
+["Please stop here.","দয়া করে এখানে থামুন।"],
+["I am getting late.","আমার দেরি হয়ে যাচ্ছে।"]
+],"Practice booking a taxi."],
+
+["Telephone Conversation","ফোনে কথা বলা",[
+["Hello, who is speaking?","হ্যালো, কে বলছেন?"],
+["Can I speak to Rahul?","আমি কি রাহুলের সঙ্গে কথা বলতে পারি?"],
+["Please call me later.","পরে আমাকে ফোন করুন।"],
+["I will call you back.","আমি আপনাকে আবার ফোন করব।"],
+["The line is busy.","লাইন ব্যস্ত।"]
+],"Make a pretend phone call."],
+
+["Workplace English","অফিসে English",[
+["I am working on it.","আমি এটি নিয়ে কাজ করছি।"],
+["Please send me the file.","আমাকে ফাইলটি পাঠান।"],
+["I have completed the work.","আমি কাজটি শেষ করেছি।"],
+["Let's discuss this.","চলুন এটি নিয়ে আলোচনা করি।"],
+["I need some help.","আমার একটু সাহায্য দরকার।"]
+],"Explain your work in English."],
+
+["Job Interview","চাকরির ইন্টারভিউ",[
+["Tell me about yourself.","নিজের সম্পর্কে বলুন।"],
+["I am hardworking.","আমি পরিশ্রমী।"],
+["I have good communication skills.","আমার যোগাযোগের দক্ষতা ভালো।"],
+["I am a quick learner.","আমি দ্রুত শিখতে পারি।"],
+["Thank you for this opportunity.","এই সুযোগের জন্য ধন্যবাদ।"]
+],"Introduce yourself as a job candidate."],
+
+["Talking About Experience","অভিজ্ঞতা নিয়ে কথা",[
+["I have three years of experience.","আমার তিন বছরের অভিজ্ঞতা আছে।"],
+["I worked in a company.","আমি একটি কোম্পানিতে কাজ করেছি।"],
+["I learned many things.","আমি অনেক কিছু শিখেছি।"],
+["I can solve problems.","আমি সমস্যা সমাধান করতে পারি।"],
+["I enjoy my work.","আমি আমার কাজ উপভোগ করি।"]
+],"Describe your work experience."],
+
+["Giving Opinions","নিজের মতামত প্রকাশ",[
+["I think you are right.","আমার মনে হয় আপনি ঠিক।"],
+["In my opinion, it is good.","আমার মতে এটি ভালো।"],
+["I agree with you.","আমি আপনার সঙ্গে একমত।"],
+["I don't think so.","আমার তা মনে হয় না।"],
+["That is a good idea.","এটি একটি ভালো ধারণা।"]
+],"Give your opinion about learning English."],
+
+["Plans and Invitations","পরিকল্পনা ও আমন্ত্রণ",[
+["Would you like to come?","আপনি কি আসতে চান?"],
+["Let's go together.","চলুন একসঙ্গে যাই।"],
+["I am planning a trip.","আমি একটি ভ্রমণের পরিকল্পনা করছি।"],
+["Are you free tomorrow?","আপনি কি কাল ফাঁকা আছেন?"],
+["That sounds great.","শুনতে দারুণ লাগছে।"]
+],"Invite a friend somewhere."],
+
+["Making Complaints","সমস্যা ও অভিযোগ",[
+["There is a problem.","একটি সমস্যা আছে।"],
+["This is not working.","এটি কাজ করছে না।"],
+["I am not satisfied.","আমি সন্তুষ্ট নই।"],
+["Please fix this issue.","দয়া করে সমস্যাটি ঠিক করুন।"],
+["I need a replacement.","আমার পরিবর্তে আরেকটি চাই।"]
+],"Explain a problem politely."],
+
+["Health and Emergency","স্বাস্থ্য ও জরুরি কথাবার্তা",[
+["I am not feeling well.","আমার শরীর ভালো লাগছে না।"],
+["I have a headache.","আমার মাথা ব্যথা করছে।"],
+["Please call a doctor.","দয়া করে ডাক্তার ডাকুন।"],
+["I need help.","আমার সাহায্য দরকার।"],
+["Where is the hospital?","হাসপাতাল কোথায়?"]
+],"Explain a health problem in English."],
+
+["Storytelling","ছোট গল্প বলা",[
+["Yesterday I went to the market.","গতকাল আমি বাজারে গিয়েছিলাম।"],
+["I met my friend there.","সেখানে আমার বন্ধুর সঙ্গে দেখা হয়েছিল।"],
+["We talked for an hour.","আমরা এক ঘণ্টা কথা বলেছিলাম।"],
+["Then we went home.","তারপর আমরা বাড়ি ফিরেছিলাম।"],
+["It was a great day.","দিনটি খুব ভালো ছিল।"]
+],"Tell a short story about yesterday."],
+
+["Final Speaking Challenge","শেষ দিনের Speaking Challenge",[
+["My name is Rahul.","আমার নাম রাহুল।"],
+["I live in Kolkata.","আমি কলকাতায় থাকি।"],
+["I am learning English.","আমি ইংরেজি শিখছি।"],
+["I practice every day.","আমি প্রতিদিন অনুশীলন করি।"],
+["I can speak English confidently.","আমি আত্মবিশ্বাসের সঙ্গে ইংরেজি বলতে পারি।"]
+],"Speak continuously in English for three minutes."]
+];
+
+// ---------------- APP STATE ----------------
+let currentDay=Number(localStorage.getItem("englishCurrentDay")||0);
+let completed=JSON.parse(localStorage.getItem("englishCompleted")||"[]");
+let quizIndex=0,quizScore=0,quizAnswered=false;
+
+function showTab(name){
+ document.querySelectorAll(".tabpage").forEach(x=>x.classList.remove("active"));
+ document.getElementById(name).classList.add("active");
+ document.querySelectorAll(".navbtn").forEach(x=>x.classList.toggle("active",x.dataset.tab===name));
+ if(name==="course")renderCourse();
+ if(name==="sentences")renderSentences();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+// ---------------- SPEECH AUDIO ----------------
+function speak(text,button){
+ if(!("speechSynthesis" in window)){
+  alert("Your browser does not support text-to-speech.");
+  return;
+ }
+ speechSynthesis.cancel();
+ let utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="en-US";
+ utterance.rate=.85;
+ utterance.pitch=1;
+ if(button){
+  button.classList.add("playing");
+  utterance.onend=()=>button.classList.remove("playing");
+  utterance.onerror=()=>button.classList.remove("playing");
+ }
+ speechSynthesis.speak(utterance);
+}
+
+function sentenceCard(item){
+ let safe=JSON.stringify(item[0]).replace(/</g,"\\u003c");
+ return `<div class="example">
+ <div class="english">${item[0]}</div>
+ <div class="bengali">${item[1]}</div>
+ <button class="play" onclick='speak(${safe},this)'>🔊 Play English</button>
+ </div>`;
+}
+
+// ---------------- COURSE ----------------
+function renderCourse(){
+ document.getElementById("dayGrid").innerHTML=lessons.map((l,i)=>
+ `<button class="day ${currentDay===i?"active":""} ${completed.includes(i)?"done":""}" onclick="openDay(${i})">
+ ${completed.includes(i)?"✓ ":""}Day ${i+1}
+ </button>`
+ ).join("");
+ renderLesson();
+}
+
+function openDay(n){
+ currentDay=n;
+ localStorage.setItem("englishCurrentDay",n);
+ renderCourse();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderLesson(){
+ let l=lessons[currentDay];
+ document.getElementById("lessonArea").innerHTML=`
+ <div class="card">
+  <div class="lesson-head">
+   <small>DAY ${currentDay+1} OF 30</small>
+   <h2>${l[0]}</h2>
+   <p>${l[1]}</p>
+   <div class="lesson-meta">
+    <span class="pill">⏱ 15 Minutes</span>
+    <span class="pill">🎧 Audio Practice</span>
+   </div>
+  </div>
+  <h3>📖 Learn Today's Sentences</h3>
+  ${l[2].map(sentenceCard).join("")}
+  <div class="practice-box">
+   <h3>🎤 Speaking Challenge</h3>
+   <p>${l[3]}</p>
+   <button class="btn" onclick="speak(${JSON.stringify(l[3])},this)">🔊 Listen</button>
+   <button class="btn light" onclick="repeatLesson()">🔁 Repeat Lesson</button>
+  </div>
+  <br>
+  <div class="navrow" style="display:flex;gap:8px;justify-content:space-between">
+   <button class="btn light" onclick="openDay(${Math.max(0,currentDay-1)})" ${currentDay===0?"disabled":""}>← Previous</button>
+   <button class="btn green" onclick="completeLesson()">✓ Complete</button>
+   <button class="btn" onclick="openDay(${Math.min(29,currentDay+1)})" ${currentDay===29?"disabled":""}>Next →</button>
+  </div>
+ </div>`;
+}
+
+function repeatLesson(){
+ let list=lessons[currentDay][2].map(x=>x[0]);
+ speak(list.join(". "));
+}
+function completeLesson(){
+ if(!completed.includes(currentDay)){
+  completed.push(currentDay);
+  localStorage.setItem("englishCompleted",JSON.stringify(completed));
+ }
+ updateDashboard();
+ renderCourse();
+ alert("Lesson completed! Great work! 🎉");
+}
+function openCurrent(){
+ showTab("course");
+ openDay(currentDay);
+}
+
+// ---------------- SENTENCE LIBRARY ----------------
+function renderSentences(){
+ let q=(document.getElementById("sentenceSearch").value||"").toLowerCase();
+ let all=lessons.flatMap(l=>l[2]);
+ let filtered=all.filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q));
+ document.getElementById("sentenceList").innerHTML=
+ filtered.length?filtered.map(sentenceCard).join(""):'<div class="empty">No sentences found.</div>';
+}
+
+// ---------------- PRACTICE ----------------
+const challenges=[
+"Introduce yourself in English.",
+"Describe your daily routine.",
+"Talk about your family.",
+"Describe your favourite food.",
+"Talk about your work or studies.",
+"Describe your city.",
+"Talk about your future plans.",
+"Explain what you did yesterday.",
+"Describe your best friend.",
+"Talk about why you want to learn English."
+];
+let challengeIndex=0;
+function newChallenge(){
+ challengeIndex=(challengeIndex+1)%challenges.length;
+ document.getElementById("challengeText").innerText=challenges[challengeIndex];
+}
+function savePractice(){
+ let value=document.getElementById("practiceAnswer").value;
+ localStorage.setItem("englishPractice",value);
+ document.getElementById("practiceMessage").innerText="Your practice answer has been saved!";
+}
+function repeatSentence(){
+ let text=document.getElementById("challengeText").innerText;
+ speak(text);
+ setTimeout(()=>speak(text),3500);
+}
+
+// ---------------- QUIZ ----------------
+const questions=[
+["What is the meaning of 'Good morning'?",
+["শুভরাত্রি","সুপ্রভাত","ধন্যবাদ"],1],
+["Choose the correct sentence.",
+["I am happy.","I happy am.","Am happy I."],0],
+["What is the past tense of 'go'?",
+["Goed","Going","Went"],2],
+["How do you ask someone's name?",
+["How old are you?","What is your name?","Where are you?"],1],
+["Choose the correct sentence.",
+["She are busy.","She am busy.","She is busy."],2],
+["What does 'Thank you' mean?",
+["ধন্যবাদ","দুঃখিত","স্বাগতম"],0],
+["How do you ask for the price?",
+["Where are you?","How much is this?","Who are you?"],1],
+["What is the future form?",
+["I went tomorrow.","I go yesterday.","I will go tomorrow."],2],
+["Choose the correct sentence.",
+["I don't know.","I doesn't know.","I not know."],0],
+["What does 'I am learning English' mean?",
+["আমি ইংরেজি শিখছি","আমি ইংরেজি ভুলেছি","আমি ইংরেজি পড়েছিলাম"],0]
+];
+
+function renderQuiz(){
+ quizAnswered=false;
+ let q=questions[quizIndex];
+ document.getElementById("quizArea").innerHTML=
+ `<h3>Question ${quizIndex+1} / ${questions.length}</h3><p>${q[0]}</p>`+
+ q[1].map((a,i)=>`<button class="quiz-option" onclick="answerQuiz(${i},this)">${a}</button>`).join("");
+ document.getElementById("quizFeedback").innerText="";
+ document.getElementById("quizScore").innerText="Score: "+quizScore;
+}
+function answerQuiz(n,button){
+ if(quizAnswered)return;
+ quizAnswered=true;
+ let q=questions[quizIndex];
+ let buttons=document.querySelectorAll(".quiz-option");
+ buttons[q[2]].classList.add("correct");
+ if(n===q[2]){
+  quizScore++;
+  document.getElementById("quizFeedback").innerText="Correct answer! 🎉";
+ }else{
+  button.classList.add("wrong");
+  document.getElementById("quizFeedback").innerText="Not quite. The correct answer is highlighted.";
+ }
+ document.getElementById("quizScore").innerText="Score: "+quizScore;
+}
+function nextQuiz(){
+ quizIndex++;
+ if(quizIndex>=questions.length){
+  document.getElementById("quizArea").innerHTML="<h3>Quiz completed! 🏆</h3>";
+  document.getElementById("quizFeedback").innerText="Your final score: "+quizScore+" / "+questions.length;
+  document.getElementById("quizScore").innerText="Well done! Try again to improve your score.";
+  quizIndex=0;quizScore=0;
+  return;
+ }
+ renderQuiz();
+}
+
+// ---------------- DASHBOARD ----------------
+function updateDashboard(){
+ let count=completed.length;
+ let p=Math.round(count/30*100);
+ document.getElementById("doneCount").innerText=count;
+ document.getElementById("percent").innerText=p+"%";
+ document.getElementById("progressLabel").innerText=count+" / 30";
+ document.getElementById("progress").style.width=p+"%";
+ document.getElementById("todayTitle").innerText="Day "+(currentDay+1)+": "+lessons[currentDay][0];
+}
+
+document.getElementById("practiceAnswer").value=localStorage.getItem("englishPractice")||"";
+renderCourse();
+renderQuiz();
+updateDashboard();
+</script>
+</body>
+</html>
